@@ -1,0 +1,36 @@
+/* Property themes. The hub is the frame; each property (book, series) can have a theme
+   that colours its own pages, set by `theme:` in a page's front matter. The header and
+   footer sit outside <main>, so they always stay hub.
+
+   To add a property later: add a block here, then set `theme:` on its pages.
+   A theme changes roles (--heading, --button, ...), not the page structure. */
+
+/* Plum Dusk: The Unknown Mother (codex design, 2026-06-20). Base #18112B; accents
+   ember #E08A52, brass #C9A86A, blue-sun #6E8FD0, violet #A88FD9.
+   On the cream field the plum carries headings and buttons; the bright accents are used
+   only on plum, where they are readable (ember on plum 6.9:1, violet 6.6:1). */
+[data-theme='plum-dusk'] {
+  --plum: #18112B;
+  --plum-ember: #E08A52;
+  --plum-brass: #C9A86A;
+  --plum-blue: #6E8FD0;
+  --plum-violet: #A88FD9;
+
+  --heading: var(--plum);
+  --button: var(--plum);
+  --link-line: var(--plum-violet);
+  --rule: color-mix(in srgb, var(--plum-brass) 55%, transparent);
+}
+[data-theme='plum-dusk'] .eyebrow::before { border-top-color: var(--plum-ember); }
+[data-theme='plum-dusk'] .label-row { border-bottom-color: var(--rule); }
+
+[data-theme='plum-dusk'] .band--plum { background: var(--plum); color: var(--field); border: 0; }
+[data-theme='plum-dusk'] .band--plum h2,
+[data-theme='plum-dusk'] .band--plum h3 { color: var(--field); }
+[data-theme='plum-dusk'] .band--plum .eyebrow,
+[data-theme='plum-dusk'] .band--plum .meta { color: var(--plum-ember); }
+
+[data-theme='plum-dusk'] .cover--plum { background: var(--plum); border-color: var(--plum); max-width: 15rem; }
+[data-theme='plum-dusk'] .cover-frame { border-color: var(--plum-brass); }
+[data-theme='plum-dusk'] .cover-frame .meta { color: var(--plum-brass); }
+[data-theme='plum-dusk'] .cover-frame .lede { color: var(--field); font-size: 1.6rem; }

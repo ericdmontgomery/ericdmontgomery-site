@@ -1,6 +1,7 @@
 ---
 import { getCollection, render } from 'astro:content';
 import Base from '../layouts/Base.astro';
+import NowSlot from '../components/NowSlot.astro';
 
 // One page is built for every Markdown file in the "pages" collection.
 // The Home page's file is home.md, but its address is "/", so its slug is left empty.
@@ -14,9 +15,17 @@ export async function getStaticPaths() {
 
 const { page } = Astro.props;
 const { Content } = await render(page);
-const title = page.id === 'home' ? 'Eric D. Montgomery' : `${page.data.title} · Eric D. Montgomery`;
+const isHome = page.id === 'home';
+const title = isHome ? 'Eric D. Montgomery' : `${page.data.title} · Eric D. Montgomery`;
 ---
-<Base title={title}>
+<Base title={title} page={page.id} theme={page.data.theme}>
+  {isHome && (
+    // The hub frame: the permanent name, then the one slot that changes per book.
+    <div class="masthead">
+      <p class="masthead-name">Eric D. Montgomery</p>
+      <NowSlot />
+    </div>
+  )}
   <article class="prose">
     <Content />
   </article>

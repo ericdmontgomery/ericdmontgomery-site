@@ -10,6 +10,7 @@ const pages = defineCollection({
     title: z.string(), // used for the browser tab title
     nav: z.string(), // label in the site menu
     order: z.number(), // position in the site menu
+    theme: z.string().optional(), // a property theme from src/styles/themes.css; none = the plain hub
   }),
 });
 

@@ -28,6 +28,13 @@ node scripts/verify-pages.mjs path/to/ericdmontgomery.WordPress.2026-11-07.xml
 
 `verify-pages.mjs` compares each built page's text with the export and checks for leftover WordPress markup, broken links and outside references.
 
+## Design
+
+- Hub palette, type and layout: `src/styles/global.css` (values from `hub_identity.md`).
+- The "now" slot on Home: `src/data/hub.ts`. The only edit when a new book leads.
+- Property themes (e.g. Plum Dusk for *The Unknown Mother*): `src/styles/themes.css`. A page opts in with `theme:` in its front matter; the header and footer always stay hub. To add a property, add a theme block and set `theme:` on its pages.
+- The converter keeps WordPress's layout as a few plain class names (`band`, `cols`, `card`, `eyebrow`, ...); they are listed in `scripts/convert-wordpress.mjs`.
+
 ## Deployment
 
 - Production: every push to `main` rebuilds and deploys to https://ericdmontgomery-site.eric-d-montgomery.workers.dev (until the domain is connected in January 2027).

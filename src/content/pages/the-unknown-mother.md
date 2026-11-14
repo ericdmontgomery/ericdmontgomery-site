@@ -2,29 +2,60 @@
 title: "The Unknown Mother"
 nav: "The Unknown Mother"
 order: 3
+theme: "plum-dusk"
 ---
 
-A novel · Book one · Coming soon
+<div class="band">
+
+<div class="cols">
+
+<div class="col">
+
+<p class="eyebrow">A novel · Book one · Coming soon</p>
 
 # The Unknown Mother
 
-*“Fen Jaibach placed a hand on the back of his neck and closed his eyes.”*
+<p class="lede"><em>“Fen Jaibach placed a hand on the back of his neck and closed his eyes.”</em></p>
 
-The first line
+<p class="meta">The first line</p>
 
 A wolf tore out Fenwick’s throat. His tribe mourned and laid him to rest. A month later, Fenwick opened his eyes.
 
-[Read the opening](#opening)
+<div class="actions">
+
+<a class="button" href="#opening">Read the opening</a>
 
 Get updates
 
-A novel
+</div>
 
-The Unknown Mother
+</div>
 
-Eric D. Montgomery
+<div class="col">
 
-The story
+<div class="cover cover--plum">
+
+<div class="cover-frame">
+
+<p class="meta">A novel</p>
+
+<p class="lede">The Unknown Mother</p>
+
+<p class="meta">Eric D. Montgomery</p>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="band band--paper">
+
+<p class="eyebrow">The story</p>
 
 The Shamans call it an Echo, immense power gifted by the Sky God. The Outsiders call it biotech that can change the future. For Fen, it’s tiny claws scratching away, threatening to tear him apart from inside.
 
@@ -32,19 +63,31 @@ Stories of a banished Shaman and visions from an ancient warrior hint at answers
 
 The OmniMites will kill him. Scientists want to dissect him. His tribe wants him home. But Fen has seen what lies beyond the Reservation, and for the first time in his life, he’s not running from rejection—he’s running toward possibility.
 
-For readers of
+<p class="meta">For readers of</p>
 
 *The Expanse* series (James S.A. Corey) and the anthropological worldbuilding of C.J. Cherryh.
 
-Where to buy
+</div>
+
+<div class="band">
+
+<p class="eyebrow">Where to buy</p>
 
 ## Ebook, paperback and hardcover
 
 Coming soon to Kobo, Apple Books, Barnes & Noble, Amazon and your local bookstore. Join the newsletter to hear the day it’s out.
 
+<div class="actions">
+
 Join the newsletter
 
-<p id="opening">Read the opening</p>
+</div>
+
+</div>
+
+<div class="band">
+
+<p id="opening" class="eyebrow">Read the opening</p>
 
 ## Chapter 1
 
@@ -136,14 +179,40 @@ He didn’t run. He didn’t plead. He lifted his head to the sky and closed his
 
 The wolf lunged. Teeth clamped onto his neck and tore out his throat, leaving him with nothing but a silent scream. The smell of wet fur rested in his nostrils. The weight upon his chest knocked him backwards. The sound of birds suddenly taking flight rose and faded as blood pulsed from his neck and onto his chest. He reached for the ivory horn and clasped it firmly. He opened his eyes long enough to see the beast flailing about in its final death throes, and he smiled at the irony of it all. The darkness encroached his vision, erasing the forest at its edges. A silence unlike anything he had ever heard before settled almost unnaturally. The ground left him. The air relinquished his flesh, and the world was no more. All that remained was his mother’s smile.
 
-The series
+</div>
 
-Book two, *The Lavender Maid*, is in progress.
+<div class="band">
+
+<div class="cols">
+
+<div class="col">
+
+<div class="card">
+
+<p class="meta">The series</p>
+
+<p class="lede">Book two, <em>The Lavender Maid</em>, is in progress.</p>
 
 Hear about it first →
 
-New to the world?
+</div>
 
-The glossary has the names, places and words, with no spoilers.
+</div>
+
+<div class="col">
+
+<div class="card">
+
+<p class="meta">New to the world?</p>
+
+<p class="lede">The glossary has the names, places and words, with no spoilers.</p>
 
 [Open the glossary →](/glossary/)
+
+</div>
+
+</div>
+
+</div>
+
+</div>

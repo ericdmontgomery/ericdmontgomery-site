@@ -1,20 +1,33 @@
 ---
 // Fonts are self-hosted through Fontsource: they are bundled into the build,
 // so pages load nothing from Google or any other outside server.
-import '@fontsource/lora/500.css';
+// Lora: reading text (400), the name and headings (500), the tagline (italic).
+// Montserrat: labels, menu and buttons (500, 600).
+import '@fontsource/lora/400.css';
 import '@fontsource/lora/400-italic.css';
+import '@fontsource/lora/500.css';
+import '@fontsource/lora/500-italic.css';
 import '@fontsource/montserrat/500.css';
+import '@fontsource/montserrat/600.css';
 import '../styles/global.css';
+import '../styles/themes.css';
 import { getCollection } from 'astro:content';
 
 interface Props {
   title: string;
   description?: string;
+  page?: string; // page id, used for page-specific styling (data-page)
+  theme?: string; // property theme for the page body; the header and footer stay hub
 }
-const { title, description = 'Eric D. Montgomery, author. What lies ahead.' } = Astro.props;
+const { title, description = 'Eric D. Montgomery, author. What lies ahead.', page, theme } = Astro.props;
 // The menu is built from the pages collection, so a new page appears in it on its own.
-const pages = (await getCollection('pages')).sort((a, b) => a.data.order - b.data.order);
+// Home is left out: the name in the header is the link home.
+const pages = (await getCollection('pages'))
+  .filter((p) => p.id !== 'home')
+  .sort((a, b) => a.data.order - b.data.order);
 const current = Astro.url.pathname;
+const isHome = current === '/';
+const year = new Date().getFullYear();
 ---
 <!doctype html>
 <html lang="en">
@@ -22,17 +35,26 @@ const current = Astro.url.pathname;
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content={description} />
+    <meta name="theme-color" content="#F7F4EE" />
     <title>{title}</title>
   </head>
   <body>
-    <header class="site-header">
+    <header class:list={['site-header', { 'site-header--home': isHome }]}>
+      {!isHome && <a class="wordmark" href="/">Eric D. Montgomery</a>}
       <nav aria-label="Main">
         {pages.map((p) => {
-          const href = p.id === 'home' ? '/' : `/${p.id}/`;
+          const href = `/${p.id}/`;
           return <a href={href} aria-current={current === href ? 'page' : undefined}>{p.data.nav}</a>;
         })}
       </nav>
     </header>
-    <slot />
+    <main data-page={page} data-theme={theme}>
+      <slot />
+    </main>
+    <footer class="site-footer">
+      <p class="footer-name">Eric D. Montgomery</p>
+      <p class="footer-tagline">What lies ahead.</p>
+      <p class="footer-small">© {year} Eric D. Montgomery</p>
+    </footer>
   </body>
 </html>

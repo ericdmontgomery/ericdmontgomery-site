@@ -1,95 +1,349 @@
-/* Hub palette (hub_identity.md). Placeholder styling; the design pass is increment 3. */
+/* Hub design (hub_identity.md). The hub is the permanent frame: light, warm, neutral.
+   Property colours (e.g. Plum Dusk) live in themes.css and apply only to their own pages. */
+
 :root {
-  --field: #F7F4EE;
-  --field-warm: #FFFBF0;
-  --field-cool: #ECEBEE;
+  /* Palette: exact values from hub_identity.md */
+  --field: #F7F4EE;       /* warm cream */
+  --field-warm: #FFFBF0;  /* warm light, high right */
+  --field-cool: #ECEBEE;  /* cool settle, lower left */
   --ink: #23203A;
   --ink-soft: #4A4563;
   --muted: #867F93;
   --brass: #B08D57;
+
+  /* Derived: a hairline in brass, and a translucent warm "paper" for panels */
+  --line: color-mix(in srgb, var(--brass) 38%, transparent);
+  --paper: color-mix(in srgb, var(--field-warm) 72%, transparent);
+
+  /* Roles: what a theme may override. Hub values by default. */
+  --heading: var(--ink);
+  --button: var(--ink);
+  --link-line: var(--brass);
+  --rule: var(--line);
+
   --font-serif: 'Lora', Georgia, serif;
   --font-sans: 'Montserrat', 'Helvetica Neue', Arial, sans-serif;
+
+  /* Widths: a reading measure for text, a wider frame for cards and columns */
+  --measure: 40rem;
+  --wide: 70rem;
+  --gutter: clamp(1.25rem, 5vw, 2.5rem);
 }
 
 * { box-sizing: border-box; }
-
-html, body { margin: 0; min-height: 100%; }
+html { -webkit-text-size-adjust: 100%; background: var(--field); }
 
 body {
+  margin: 0;
   min-height: 100vh;
-  padding: 1.5rem 1.5rem 4rem;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  isolation: isolate;
   color: var(--ink);
-  font-family: var(--font-sans);
+  font-family: var(--font-serif);
+  font-size: 1.125rem;
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+}
+main { flex: 1; }
+
+/* The field: cream, with warm light high right and a cool settle lower left.
+   Fixed behind everything, so the light stays put while the page scrolls. */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -1;
   background:
-    radial-gradient(ellipse at 85% 10%, var(--field-warm), transparent 60%),
-    radial-gradient(ellipse at 10% 95%, var(--field-cool), transparent 55%),
+    radial-gradient(ellipse 75% 65% at 82% 6%, var(--field-warm), transparent 70%),
+    radial-gradient(ellipse 65% 60% at 6% 98%, var(--field-cool), transparent 70%),
     var(--field);
 }
-
-main.center {
-  text-align: center;
-  margin: 18vh auto 0;
+/* Fine grain at ~3.5% over the whole page so the field doesn't read as flat digital fill.
+   The noise is drawn by an inline SVG, so nothing is loaded from outside the site. */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  pointer-events: none;
+  opacity: 0.035;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
-/* Site menu: plain row of links, wraps on narrow screens. */
-.site-header nav {
+/* ---------- Small capitals labels (Montserrat, letterspaced) ----------
+   Montserrat has no true small capitals, so capitals at a small size do the job.
+   Small labels use ink soft: brass and muted are too faint on cream for small text. */
+.eyebrow, .meta, .site-header nav a, .button, .now, .footer-small {
+  font-family: var(--font-sans);
+  text-transform: uppercase;
+  line-height: 1.5;
+}
+.eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 0.85em;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.24em;
+  color: var(--ink-soft);
+  margin: 0 0 1.25rem;
+}
+.eyebrow::before {
+  content: '';
+  flex: 0 0 1.75rem;
+  border-top: 1px solid var(--brass);
+}
+.meta {
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  color: var(--ink-soft);
+  margin: 0 0 0.75rem;
+}
+
+/* ---------- Header: the name (link home) and the menu ---------- */
+.site-header {
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
-  gap: 0.5rem 1.75rem;
-  margin: 0 auto 3rem;
-}
-.site-header a {
-  font-variant: small-caps;
-  text-transform: lowercase;
-  letter-spacing: 0.14em;
-  font-size: 0.95rem;
-  text-decoration: none;
-  color: var(--muted);
-}
-.site-header a:hover { color: var(--ink); }
-.site-header a[aria-current='page'] { color: var(--ink); border-bottom: 1px solid var(--brass); }
-
-/* Page text from Markdown. Placeholder reading layout; the design pass is increment 3. */
-.prose {
-  max-width: 42rem;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.75rem 2rem;
+  width: 100%;
+  max-width: calc(var(--wide) + 2 * var(--gutter));
   margin: 0 auto;
-  font-size: 1.05rem;
-  line-height: 1.7;
+  padding: 1.5rem var(--gutter);
 }
-.prose h1, .prose h2, .prose h3 { font-family: var(--font-serif); font-weight: 500; line-height: 1.2; }
-.prose h1 { font-size: clamp(1.8rem, 5vw, 2.6rem); margin: 1.5rem 0 1rem; }
-.prose h2 { font-size: 1.6rem; margin: 2.5rem 0 0.75rem; }
-.prose h3 { font-size: 1.25rem; margin: 2rem 0 0.5rem; }
-.prose hr { border: 0; border-top: 1px solid var(--field-cool); margin: 2rem 0; }
-.prose :target { scroll-margin-top: 1rem; }
-
-.name {
+.site-header--home { justify-content: center; }
+.wordmark {
   font-family: var(--font-serif);
   font-weight: 500;
   text-transform: uppercase;
-  letter-spacing: 0.18em;
-  font-size: clamp(1.6rem, 5vw, 2.8rem);
-  margin: 0;
+  letter-spacing: 0.2em;
+  font-size: 0.95rem;
+  color: var(--ink);
+  text-decoration: none;
+}
+.site-header nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.75rem;
+}
+.site-header nav a {
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  color: var(--ink-soft);
+  text-decoration: none;
+  padding-bottom: 0.2rem;
+  border-bottom: 1px solid transparent;
+}
+.site-header nav a:hover { color: var(--ink); }
+.site-header nav a[aria-current='page'] { color: var(--ink); border-bottom-color: var(--brass); }
+
+@media (max-width: 40rem) {
+  .site-header { flex-direction: column; align-items: center; text-align: center; }
+  .site-header nav { justify-content: center; gap: 0.4rem 1.25rem; }
 }
 
-.tagline {
+/* ---------- Home masthead: the name, then the "now" slot ---------- */
+.masthead {
+  text-align: center;
+  padding: clamp(3rem, 12vh, 7.5rem) var(--gutter) clamp(1rem, 4vh, 2rem);
+}
+.masthead-name {
   font-family: var(--font-serif);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.22em;
+  /* Letterspacing adds space after the last letter; this pad keeps the name optically centred. */
+  padding-left: 0.22em;
+  font-size: clamp(1.45rem, 5.4vw, 3.4rem);
+  line-height: 1.2;
+  color: var(--ink);
+  margin: 0 0 1.75rem;
+}
+.masthead-tagline {
   font-style: italic;
   color: var(--ink-soft);
-  font-size: clamp(1.1rem, 2.5vw, 1.4rem);
-  margin: 0.75rem 0 2.5rem;
+  font-size: clamp(1.15rem, 2.6vw, 1.5rem);
+  margin: 0 0 2rem;
+}
+/* The now slot: brass label over a muted line, exactly as in hub_identity.md. */
+.now {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.35rem;
+  text-decoration: none;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--brass);
+}
+.now-label { color: var(--brass); font-weight: 600; font-size: 0.72rem; letter-spacing: 0.32em; padding-left: 0.32em; }
+.now-line { color: var(--muted); font-weight: 500; font-size: 0.72rem; letter-spacing: 0.2em; padding-left: 0.2em; }
+.now:hover .now-line { color: var(--ink-soft); }
+
+/* ---------- Page body ---------- */
+.prose h1, .prose h2, .prose h3 {
+  font-family: var(--font-serif);
+  font-weight: 500;
+  color: var(--heading);
+  line-height: 1.12;
+  letter-spacing: -0.005em;
+  text-wrap: balance;
+}
+.prose h1 { font-size: clamp(2.4rem, 6.5vw, 4.4rem); margin: 0 0 1.5rem; }
+.prose h2 { font-size: clamp(1.6rem, 3.4vw, 2.3rem); margin: 2.5rem 0 1rem; }
+.prose h3 { font-size: clamp(1.35rem, 2.6vw, 1.75rem); margin: 0.25rem 0 0.75rem; }
+.prose .eyebrow + h1, .prose .eyebrow + h2, .prose .meta + h2, .prose .meta + h3 { margin-top: 0; }
+.prose p { margin-top: 0; margin-bottom: 1.1em; }
+.prose a { color: inherit; text-decoration-color: var(--link-line); text-underline-offset: 0.22em; text-decoration-thickness: 1px; }
+.prose a:hover { text-decoration-color: currentColor; }
+.prose hr { border: 0; border-top: 1px solid var(--rule); margin: 2.25rem 0; }
+.prose :target { scroll-margin-top: 1.5rem; }
+
+.lede { font-size: 1.2rem; line-height: 1.6; color: var(--ink-soft); }
+.pull {
+  font-size: clamp(1.4rem, 3vw, 2.05rem);
+  line-height: 1.45;
+  text-align: center;
+  text-wrap: balance;
+}
+.center { text-align: center; }
+
+/* ---------- Bands: full-width sections ----------
+   The side padding makes every band's content line up on one wide frame, so all
+   pages share a left edge. Text inside is capped at a reading width; columns and
+   cards use the full frame. */
+.band {
+  padding: clamp(2.75rem, 8vw, 5.5rem) max(var(--gutter), (100% - var(--wide)) / 2);
+}
+.band > * { max-width: var(--measure); }
+.band > .wide, .band > .cols { max-width: none; }
+.band > :last-child, .card > :last-child, .col > :last-child { margin-bottom: 0; }
+/* Two plain bands in a row share one gap instead of two. */
+.band:not([class*='band--']) + .band:not([class*='band--']) { padding-top: 0; }
+
+.band--ink { background: var(--ink); color: var(--field); }
+/* The ink band holds a single centred statement (the creed). */
+.band--ink > * { margin-left: auto; margin-right: auto; text-align: center; }
+.band--ink .meta, .band--ink .eyebrow { color: var(--brass); }
+.band--ink a { text-decoration-color: var(--brass); }
+.prose > .band:last-child { border-bottom: 0; }
+.band--ink + .band { padding-top: clamp(2.75rem, 8vw, 5.5rem); }
+
+/* Paper: a lighter panel across the page. On the hub, "plum" bands also take paper:
+   Plum Dusk belongs to The Unknown Mother's own pages (see themes.css). */
+.band--paper, .band--plum, .band--muted {
+  background: var(--paper);
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
 }
 
-.smallcaps {
-  font-variant: small-caps;
-  text-transform: lowercase;
-  letter-spacing: 0.14em;
-  font-size: 0.95rem;
-  margin: 0.2rem 0;
+/* ---------- Columns: side by side on wide screens, stacked on phones ---------- */
+.cols { display: flex; flex-wrap: wrap; gap: 2rem 3rem; align-items: flex-start; }
+.col { flex: 1 1 17rem; min-width: 0; }
+.col--narrow { flex: 0 0 11rem; }
+.wide > .eyebrow, .label-row { margin-bottom: 1.75rem; }
+.wide + .wide, .band > .wide ~ .cols { margin-top: 3rem; }
+.wide > .cols + .cols { margin-top: 2.5rem; }
+.label-row { border-bottom: 1px solid var(--line); padding-bottom: 0.6rem; }
+.label-row p { margin: 0; }
+
+/* ---------- Cards and cover stand-ins ---------- */
+.card {
+  background: var(--paper);
+  border: 1px solid var(--line);
+  padding: clamp(1.5rem, 4vw, 2.25rem);
+  height: 100%;
+}
+.card h2 { margin-top: 0; font-size: clamp(1.4rem, 2.8vw, 1.8rem); }
+
+/* A typographic stand-in where a cover image will go later. */
+.cover {
+  aspect-ratio: 2 / 3;
+  max-width: 11rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 1rem;
+  background: var(--ink);
+  color: var(--field);
+  border: 1px solid var(--line);
+}
+.cover p { margin: 0; font-size: 1.15rem; line-height: 1.2; font-weight: 500; color: inherit; }
+.cover--paper { background: var(--paper); color: var(--ink); }
+.cover--muted { background: var(--ink-soft); }
+.cover--plum, .cover--ink { background: var(--ink); }
+.cover-frame {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 0.6rem;
+  text-align: center;
+  border: 1px solid var(--brass);
+  padding: 1rem;
+}
+.cover-frame .meta { margin: 0; color: var(--brass); font-size: 0.6rem; }
+.cover-frame .lede { font-size: 1.35rem; }
+
+/* ---------- Buttons ---------- */
+.actions { display: flex; flex-wrap: wrap; align-items: center; gap: 0.75rem 1.25rem; margin-top: 1.75rem; }
+.actions > p { margin: 0; }
+/* Button text that has no link yet (newsletter, deferred) shows as a quiet label. */
+.actions > p:not(:has(a)) { font-family: var(--font-sans); font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-soft); }
+.button, .prose a.button {
+  display: inline-block;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  padding: 1em 1.7em;
+  background: var(--button);
+  color: var(--field);
+  border: 1px solid var(--button);
+  text-decoration: none;
+}
+.button:hover, .prose a.button:hover { background: transparent; color: var(--button); }
+.button--ghost, .prose a.button--ghost { background: transparent; color: var(--button); }
+.button--ghost:hover, .prose a.button--ghost:hover { background: var(--button); color: var(--field); }
+
+/* ---------- Page-specific ---------- */
+/* Home: the opening band sits centred under the masthead, with the tagline as the headline. */
+[data-page='home'] .prose > .band:first-child { padding-top: 1rem; text-align: center; }
+[data-page='home'] .prose > .band:first-child .eyebrow { justify-content: center; }
+[data-page='home'] .prose > .band:first-child .eyebrow::after { content: ''; flex: 0 0 1.75rem; border-top: 1px solid var(--brass); }
+[data-page='home'] .prose > .band:first-child .actions { justify-content: center; }
+[data-page='home'] h1 { font-weight: 400; color: var(--ink-soft); font-size: clamp(2.8rem, 9vw, 6.2rem); line-height: 1.02; }
+[data-page='home'] h1 em { font-weight: 400; }
+[data-page='home'] .prose > .band:first-child .lede { max-width: 34rem; margin-left: auto; margin-right: auto; }
+
+/* Glossary: term on the left, definition on the right. */
+[data-page='glossary'] .cols { gap: 0.5rem 2.5rem; }
+[data-page='glossary'] .col--narrow { flex-basis: 13rem; }
+[data-page='glossary'] .col--narrow h3 { font-size: 1.3rem; margin: 0 0 0.35rem; }
+[data-page='glossary'] .prose hr { margin: 1.75rem 0; }
+
+/* ---------- Footer: the hub frame closes every page ---------- */
+.site-footer {
+  text-align: center;
+  padding: 3rem var(--gutter) 2.5rem;
+  border-top: 1px solid var(--line);
+}
+.site-footer p { margin: 0; }
+.footer-name { font-weight: 500; text-transform: uppercase; letter-spacing: 0.22em; padding-left: 0.22em; font-size: 0.9rem; }
+.site-footer .footer-tagline { font-style: italic; color: var(--ink-soft); margin: 0.25rem 0 1rem; }
+.footer-small { font-size: 0.65rem; letter-spacing: 0.2em; color: var(--ink-soft); }
+
+@media (prefers-reduced-motion: no-preference) {
+  .button, .site-header nav a { transition: background-color 0.15s, color 0.15s, border-color 0.15s; }
 }
 
-.now-label { color: var(--brass); }
-.now-title { color: var(--muted); }
-
-a { color: var(--ink-soft); }
+/* Phones: cover stand-ins shrink so each story's text stays near the top of the screen. */
+@media (max-width: 40rem) {
+  .col--narrow { flex-basis: 100%; }
+  .cover { max-width: 7.5rem; }
+  [data-theme='plum-dusk'] .cover--plum { max-width: 12rem; }
+}
