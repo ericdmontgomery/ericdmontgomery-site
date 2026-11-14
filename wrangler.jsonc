@@ -8,5 +8,8 @@
     "directory": "./dist",
     // Unknown paths get dist/404.html with a 404 status.
     "not_found_handling": "404-page"
-  }
+  },
+  // Required by `wrangler preview`, which Workers Builds runs for non-main branches.
+  // Empty: previews inherit assets and settings from the top level.
+  "previews": {}
 }
