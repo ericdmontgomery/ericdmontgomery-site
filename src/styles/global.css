@@ -17,9 +17,7 @@ html, body { margin: 0; min-height: 100%; }
 
 body {
   min-height: 100vh;
-  display: grid;
-  place-items: center;
-  padding: 2rem;
+  padding: 1.5rem 1.5rem 4rem;
   color: var(--ink);
   font-family: var(--font-sans);
   background:
@@ -28,7 +26,43 @@ body {
     var(--field);
 }
 
-main { text-align: center; }
+main.center {
+  text-align: center;
+  margin: 18vh auto 0;
+}
+
+/* Site menu: plain row of links, wraps on narrow screens. */
+.site-header nav {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.5rem 1.75rem;
+  margin: 0 auto 3rem;
+}
+.site-header a {
+  font-variant: small-caps;
+  text-transform: lowercase;
+  letter-spacing: 0.14em;
+  font-size: 0.95rem;
+  text-decoration: none;
+  color: var(--muted);
+}
+.site-header a:hover { color: var(--ink); }
+.site-header a[aria-current='page'] { color: var(--ink); border-bottom: 1px solid var(--brass); }
+
+/* Page text from Markdown. Placeholder reading layout; the design pass is increment 3. */
+.prose {
+  max-width: 42rem;
+  margin: 0 auto;
+  font-size: 1.05rem;
+  line-height: 1.7;
+}
+.prose h1, .prose h2, .prose h3 { font-family: var(--font-serif); font-weight: 500; line-height: 1.2; }
+.prose h1 { font-size: clamp(1.8rem, 5vw, 2.6rem); margin: 1.5rem 0 1rem; }
+.prose h2 { font-size: 1.6rem; margin: 2.5rem 0 0.75rem; }
+.prose h3 { font-size: 1.25rem; margin: 2rem 0 0.5rem; }
+.prose hr { border: 0; border-top: 1px solid var(--field-cool); margin: 2rem 0; }
+.prose :target { scroll-margin-top: 1rem; }
 
 .name {
   font-family: var(--font-serif);

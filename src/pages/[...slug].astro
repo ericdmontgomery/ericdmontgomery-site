@@ -1,0 +1,23 @@
+---
+import { getCollection, render } from 'astro:content';
+import Base from '../layouts/Base.astro';
+
+// One page is built for every Markdown file in the "pages" collection.
+// The Home page's file is home.md, but its address is "/", so its slug is left empty.
+export async function getStaticPaths() {
+  const pages = await getCollection('pages');
+  return pages.map((page) => ({
+    params: { slug: page.id === 'home' ? undefined : page.id },
+    props: { page },
+  }));
+}
+
+const { page } = Astro.props;
+const { Content } = await render(page);
+const title = page.id === 'home' ? 'Eric D. Montgomery' : `${page.data.title} · Eric D. Montgomery`;
+---
+<Base title={title}>
+  <article class="prose">
+    <Content />
+  </article>
+</Base>

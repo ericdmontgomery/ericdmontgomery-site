@@ -14,6 +14,20 @@ Public site for ericdmontgomery.com: the Eric D. Montgomery author hub.
 | `npm run dev` | Local preview at http://localhost:4321 |
 | `npm run build` | Build the site into `dist/` |
 
+## Pages
+
+Page text lives in `src/content/pages/*.md`, one file per page; the file name is the address (`about.md` is `/about/`, `home.md` is `/`). The menu is built from these files' `nav` and `order` fields.
+
+The five pages were generated from the old WordPress export by `scripts/convert-wordpress.mjs`. The export itself is not in this repo. To re-run the conversion (this overwrites the Markdown files, so any hand edits to them are lost):
+
+```
+node scripts/convert-wordpress.mjs path/to/ericdmontgomery.WordPress.2026-11-07.xml
+npm run build
+node scripts/verify-pages.mjs path/to/ericdmontgomery.WordPress.2026-11-07.xml
+```
+
+`verify-pages.mjs` compares each built page's text with the export and checks for leftover WordPress markup, broken links and outside references.
+
 ## Deployment
 
 - Production: every push to `main` rebuilds and deploys to https://ericdmontgomery-site.eric-d-montgomery.workers.dev (until the domain is connected in January 2027).

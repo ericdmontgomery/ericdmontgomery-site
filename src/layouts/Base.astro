@@ -5,12 +5,16 @@ import '@fontsource/lora/500.css';
 import '@fontsource/lora/400-italic.css';
 import '@fontsource/montserrat/500.css';
 import '../styles/global.css';
+import { getCollection } from 'astro:content';
 
 interface Props {
   title: string;
   description?: string;
 }
 const { title, description = 'Eric D. Montgomery, author. What lies ahead.' } = Astro.props;
+// The menu is built from the pages collection, so a new page appears in it on its own.
+const pages = (await getCollection('pages')).sort((a, b) => a.data.order - b.data.order);
+const current = Astro.url.pathname;
 ---
 <!doctype html>
 <html lang="en">
@@ -21,6 +25,14 @@ const { title, description = 'Eric D. Montgomery, author. What lies ahead.' } = 
     <title>{title}</title>
   </head>
   <body>
+    <header class="site-header">
+      <nav aria-label="Main">
+        {pages.map((p) => {
+          const href = p.id === 'home' ? '/' : `/${p.id}/`;
+          return <a href={href} aria-current={current === href ? 'page' : undefined}>{p.data.nav}</a>;
+        })}
+      </nav>
+    </header>
     <slot />
   </body>
 </html>
