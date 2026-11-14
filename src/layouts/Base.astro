@@ -1,0 +1,26 @@
+---
+// Fonts are self-hosted through Fontsource: they are bundled into the build,
+// so pages load nothing from Google or any other outside server.
+import '@fontsource/lora/500.css';
+import '@fontsource/lora/400-italic.css';
+import '@fontsource/montserrat/500.css';
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+  description?: string;
+}
+const { title, description = 'Eric D. Montgomery, author. What lies ahead.' } = Astro.props;
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <title>{title}</title>
+  </head>
+  <body>
+    <slot />
+  </body>
+</html>

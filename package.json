@@ -1,0 +1,23 @@
+{
+  "name": "ericdmontgomery-site",
+  "type": "module",
+  "version": "0.1.0",
+  "private": true,
+  "engines": {
+    "node": ">=22.23.4"
+  },
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "deploy": "astro build && wrangler deploy"
+  },
+  "dependencies": {
+    "@fontsource/lora": "5.3.0",
+    "@fontsource/montserrat": "5.3.0",
+    "astro": "7.4.12"
+  },
+  "devDependencies": {
+    "wrangler": "4.162.0"
+  }
+}

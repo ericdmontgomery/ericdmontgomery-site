@@ -1,0 +1,12 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  // Must match the Worker's name in the Cloudflare dashboard.
+  "name": "ericdmontgomery-site",
+  "compatibility_date": "2026-11-14",
+  // No "main": this Worker serves static files only, with no server code.
+  "assets": {
+    "directory": "./dist",
+    // Unknown paths get dist/404.html with a 404 status.
+    "not_found_handling": "404-page"
+  }
+}
